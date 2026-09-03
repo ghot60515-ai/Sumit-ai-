@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Promptify AI</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f6f3ff;
+    color:#202020;
+}
+
+/* ---------- HOME ---------- */
+
+#home{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:25px;
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(135deg,#7567ff,#b58cff,#72d8ff);
+}
+
+/* Cartoon bubbles */
+
+.shape{
+    position:absolute;
+    border-radius:50%;
+    background:white;
+    opacity:.25;
+}
+
+.s1{
+    width:150px;
+    height:150px;
+    top:-40px;
+    left:-40px;
+}
+
+.s2{
+    width:100px;
+    height:100px;
+    right:20px;
+    top:70px;
+}
+
+.s3{
+    width:180px;
+    height:180px;
+    bottom:-70px;
+    left:20px;
+}
+
+.s4{
+    width:80px;
+    height:80px;
+    right:50px;
+    bottom:40px;
+}
+
+.cloud{
+    position:absolute;
+    font-size:55px;
+    opacity:.7;
+}
+
+.c1{
+    top:8%;
+    left:8%;
+}
+
+.c2{
+    bottom:12%;
+    right:5%;
+}
+
+.welcome-box{
+    width:100%;
+    max-width:520px;
+    background:rgba(255,255,255,.96);
+    border-radius:30px;
+    padding:35px 25px;
+    text-align:center;
+    box-shadow:0 20px 50px rgba(0,0,0,.25);
+    position:relative;
+    z-index:2;
+}
+
+.logo{
+    font-size:55px;
+    margin-bottom:5px;
+}
+
+.welcome-box h1{
+    margin:5px 0;
+    font-size:38px;
+    color:#5b45d9;
+}
+
+.welcome-box h2{
+    margin:10px 0;
+}
+
+.welcome-box p{
+    color:#555;
+    line-height:1.6;
+}
+
+.start{
+    border:0;
+    background:#6246e5;
+    color:white;
+    padding:16px 38px;
+    border-radius:30px;
+    font-size:18px;
+    font-weight:bold;
+    margin-top:15px;
+    box-shadow:0 8px 20px rgba(98,70,229,.35);
+}
+
+/* ---------- PROMPT PAGE ---------- */
+
+#app{
+    display:none;
+    min-height:100vh;
+    background:linear-gradient(135deg,#f4f0ff,#e7f9ff);
+}
+
+.header{
+    background:linear-gradient(135deg,#6246e5,#8b5cf6);
+    color:white;
+    padding:25px 18px;
+    text-align:center;
+    border-radius:0 0 30px 30px;
+}
+
+.header h1{
+    margin:0;
+    font-size:30px;
+}
+
+.header p{
+    margin:8px 0 0;
+}
+
+.controls{
+    max-width:700px;
+    margin:18px auto;
+    padding:0 15px;
+}
+
+.search{
+    width:100%;
+    border:0;
+    outline:0;
+    padding:15px 18px;
+    border-radius:15px;
+    font-size:16px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.categories{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    margin-top:12px;
+}
+
+.categories button{
+    white-space:nowrap;
+    border:0;
+    padding:9px 15px;
+    border-radius:20px;
+    background:white;
+}
+
+.categories button.active{
+    background:#6246e5;
+    color:white;
+}
+
+#promptList{
+    max-width:700px;
+    margin:auto;
+    padding:0 15px 40px;
+}
+
+.card{
+    background:white;
+    margin:15px 0;
+    padding:18px;
+    border-radius:20px;
+    box-shadow:0 7px 22px rgba(0,0,0,.09);
+}
+
+.card h2{
+    font-size:18px;
+    margin:0 0 12px;
+}
+
+.badge{
+    display:inline-block;
+    background:#eee9ff;
+    color:#6246e5;
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:12px;
+    margin-bottom:10px;
+}
+
+.prompt{
+    background:#f7f7f9;
+    padding:14px;
+    border-radius:13px;
+    line-height:1.55;
+    font-size:15px;
+}
+
+.copy{
+    width:100%;
+    margin-top:12px;
+    padding:13px;
+    border:0;
+    border-radius:12px;
+    background:#6246e5;
+    color:white;
+    font-size:15px;
+    font-weight:bold;
+}
+
+.no-result{
+    text-align:center;
+    padding:30px;
+}
+
+.back{
+    display:block;
+    margin:0 auto 35px;
+    border:0;
+    background:white;
+    padding:12px 22px;
+    border-radius:20px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HOME -->
+
+<div id="home">
+
+<div class="shape s1"></div>
+<div class="shape s2"></div>
+<div class="shape s3"></div>
+<div class="shape s4"></div>
+
+<div class="cloud c1">☁️</div>
+<div class="cloud c2">☁️</div>
+
+<div class="welcome-box">
+
+<div class="logo">🎨✨</div>
+
+<h1>Promptify AI</h1>
+
+<h2>AI Photo Prompts</h2>
+
+<p>
+Welcome to Promptify AI! 🚀
+</p>
+
+<p>
+Yahan aapko AI images banane ke liye
+50 creative aur ready-to-use photo prompts milenge.
+Apna favourite prompt copy karo aur
+AI image generator mein paste karke amazing images banao.
+</p>
+
+<button class="start" onclick="startApp()">
+Get Started 🚀
+</button>
+
+</div>
+</div>
+
+
+<!-- APP -->
+
+<div id="app">
+
+<div class="header">
+<h1>🎨 AI Photo Prompts</h1>
+<p>50 creative prompts for amazing AI images</p>
+</div>
+
+<div class="controls">
+
+<input
+id="search"
+class="search"
+placeholder="🔍 Search prompts..."
+oninput="showPrompts()"
+>
+
+<div class="categories">
+
+<button class="active" onclick="setCategory('All',this)">All</button>
+<button onclick="setCategory('Cartoon',this)">Cartoon</button>
+<button onclick="setCategory('Fantasy',this)">Fantasy</button>
+<button onclick="setCategory('Animal',this)">Animals</button>
+<button onclick="setCategory('Space',this)">Space</button>
+
+</div>
+</div>
+
+<div id="promptList"></div>
+
+<button class="back" onclick="goHome()">← Back Home</button>
+
+</div>
+
+
+<script>
+
+const prompts = [
+
+["Cute Cartoon Boy",
+"Cartoon",
+"A cute cartoon boy standing in a colorful magical forest, beautiful flowers, soft sunlight, 3D cartoon style, expressive face, highly detailed, cinematic lighting."],
+
+["Flying Cloud Girl",
+"Fantasy",
+"A cute girl sitting on a fluffy flying cloud above a colorful cartoon city, magical sky, soft clouds, vibrant colors, dreamy fantasy style."],
+
+["Green Dragon",
+"Fantasy",
+"A friendly green dragon sitting beside a beautiful waterfall in a magical forest, glowing plants, colorful environment, detailed 3D cartoon style."],
+
+["Superhero Cat",
+"Animal",
+"A cute orange cat wearing a superhero costume standing on a city rooftop, dramatic sunset, funny expression, cinematic 3D cartoon style."],
+
+["Future Robot",
+"Cartoon",
+"A friendly futuristic robot walking through a colorful neon city, glowing buildings, cinematic lighting, detailed 3D animation style."],
+
+["Tea Panda",
+"Animal",
+"A cute panda drinking tea inside a cozy cartoon cafe, warm lights, wooden furniture, adorable expression, high quality 3D style."],
+
+["Moon Astronaut",
+"Space",
+"A young astronaut standing on the moon and looking at Earth, stars in the background, cinematic space lighting, detailed realistic cartoon style."],
+
+["Sky Castle",
+"Fantasy",
+"A magical castle floating above the clouds, rainbow sky, glowing windows, fantasy environment, beautiful cinematic composition."],
+
+["Wizard Rabbit",
+"Animal",
+"A cute rabbit wearing a wizard hat inside an enchanted forest, glowing mushrooms, magical particles, colorful fantasy cartoon style."],
+
+["Flying Hero",
+"Cartoon",
+"A young superhero flying above a futuristic city, clouds behind him, dramatic pose, colorful sky, cinematic 3D animation."],
+
+["Jungle Elephant",
+"Animal",
+"A cute elephant walking through a colorful tropical jungle, beautiful plants, butterflies, sunlight rays, adorable 3D cartoon style."],
+
+["Ocean Mermaid",
+"Fantasy",
+"A beautiful mermaid sitting on a rock under the ocean, colorful coral reefs, glowing fish, magical underwater lighting."],
+
+["Beach Puppy",
+"Animal",
+"A cute puppy wearing sunglasses on a tropical beach, palm trees, blue ocean, sunset, fun colorful 3D cartoon style."],
+
+["Alien Planet",
+"Space",
+"A tiny astronaut exploring a colorful alien planet, giant strange plants and mountains, cinematic lighting, highly detailed."],
+
+["Lion King",
+"Animal",
+"A powerful cartoon lion sitting on a golden throne inside a royal palace, dramatic lighting, majestic atmosphere, detailed 3D art."],
+
+["Magic Fairy",
+"Fantasy",
+"A beautiful fairy flying through an enchanted forest, glowing wings, magical particles, colorful flowers, dreamy cinematic lighting."],
+
+["Cycling Monkey",
+"Animal",
+"A funny cartoon monkey riding a small bicycle through a colorful village, happy expression, bright sunlight, 3D animation style."],
+
+["Neon City",
+"Space",
+"A futuristic neon city at night with flying cars, glowing buildings, colorful lights, cinematic atmosphere, ultra detailed."],
+
+["Winter Snowman",
+"Fantasy",
+"A cute snowman standing in a magical winter village, falling snow, glowing houses, warm lights, beautiful cartoon style."],
+
+["Young Wizard",
+"Fantasy",
+"A young wizard casting a glowing magical spell inside an ancient castle, magical particles, dramatic lighting, cinematic fantasy art."],
+
+["Green Snake",
+"Animal",
+"A cute green snake standing like a human in a colorful jungle, funny expression, other small snakes nearby, 3D cartoon style."],
+
+["Princess Garden",
+"Fantasy",
+"A beautiful princess walking through a magical flower garden, butterflies flying around her, colorful flowers, fantasy cartoon style."],
+
+["Penguin City",
+"Animal",
+"A cute penguin wearing a winter jacket walking through a colorful snowy city, soft snowfall, adorable 3D animation."],
+
+["Friendly Robot",
+"Cartoon",
+"A giant friendly robot helping children in a futuristic colorful city, bright sky, cinematic cartoon style, detailed environment."],
+
+["Fox Campfire",
+"Animal",
+"A cute fox sitting beside a campfire in a magical forest at night, stars above, glowing fire, cozy cinematic cartoon style."],
+
+["Pirate Ship",
+"Fantasy",
+"A colorful pirate ship sailing across a magical ocean during sunset, dramatic clouds, fantasy cartoon illustration."],
+
+["Baby Elephant",
+"Animal",
+"A cute baby elephant playing with colorful butterflies in a flower field, bright sunlight, adorable 3D cartoon art."],
+
+["Superhero Dog",
+"Animal",
+"A superhero dog protecting a colorful cartoon city, dramatic clouds, heroic pose, cinematic lighting, 3D animation."],
+
+["Magic Tree",
+"Fantasy",
+"A giant magical tree with glowing leaves in an enchanted forest, colorful flowers, magical particles, highly detailed fantasy art."],
+
+["Skateboard Panda",
+"Animal",
+"A cute panda riding a skateboard through a colorful city street, funny expression, dynamic pose, 3D cartoon style."],
+
+["Ancient Temple",
+"Fantasy",
+"A young explorer discovering an ancient temple hidden inside a dense jungle, mysterious atmosphere, cinematic fantasy lighting."],
+
+["Rocket Kitten",
+"Space",
+"A cute kitten sitting inside a colorful rocket ship, looking through the window at planets and stars, adorable 3D cartoon style."],
+
+["Snow Castle",
+"Fantasy",
+"A magical ice castle on top of a snowy mountain, glowing windows, clouds surrounding the mountain, cinematic fantasy art."],
+
+["Blue Monster",
+"Cartoon",
+"A cute friendly blue monster sitting inside a cozy colorful bedroom, funny expression, soft lighting, 3D animation style."],
+
+["Butterfly Fairy",
+"Fantasy",
+"A magical fairy flying above a colorful flower garden, giant butterflies around her, glowing particles, dreamy fantasy style."],
+
+["Cooking Bear",
+"Animal",
+"A cute bear cooking food inside a tiny cartoon kitchen, funny expression, warm lights, detailed 3D animation."],
+
+["Space Station",
+"Space",
+"A futuristic astronaut walking through a giant neon space station, glowing screens, cinematic lighting, detailed environment."],
+
+["Rabbit Car",
+"Animal",
+"A cute rabbit driving a tiny colorful car through a cartoon town, bright houses, funny expression, playful 3D style."],
+
+["Underwater City",
+"Fantasy",
+"A magical underwater city filled with glowing buildings, colorful fish, coral reefs and beautiful blue lighting."],
+
+["Mountain Warrior",
+"Fantasy",
+"A young warrior standing on a mountain during sunset, dramatic clouds, wind blowing clothes, cinematic fantasy cartoon style."],
+
+["Cute Dinosaur",
+"Animal",
+"A friendly baby dinosaur walking through a colorful prehistoric jungle, tropical plants, bright sunlight, 3D cartoon style."],
+
+["Magic Library",
+"Fantasy",
+"A magical library filled with floating books, glowing candles and mysterious magical lights, fantasy cartoon artwork."],
+
+["Cloud Puppy",
+"Animal",
+"A cute puppy sleeping peacefully on a fluffy cloud surrounded by stars and moonlight, dreamy 3D cartoon style."],
+
+["Future City",
+"Space",
+"A futuristic city with flying buildings, neon lights and advanced technology, colorful cinematic cyber cartoon style."],
+
+["Rainbow Castle",
+"Fantasy",
+"A beautiful fairy castle surrounded by rainbow clouds, magical atmosphere, glowing lights, colorful fantasy art."],
+
+["Magic Squirrel",
+"Animal",
+"A cute squirrel collecting glowing magical nuts in an enchanted forest, colorful mushrooms, fantasy 3D animation."],
+
+["Alien Flower",
+"Space",
+"A young astronaut discovering a giant glowing alien flower on another planet, beautiful mountains, cinematic fantasy lighting."],
+
+["Rainbow Panda",
+"Animal",
+"A cute panda standing under a beautiful rainbow after rain, colorful landscape, soft sunlight, adorable 3D cartoon art."],
+
+["Flying Dragon",
+"Fantasy",
+"A magnificent magical dragon flying above huge mountains during sunset, glowing wings, dramatic clouds, cinematic fantasy art."]
+
+];
+
+let currentCategory = "All";
+
+function startApp(){
+    document.getElementById("home").style.display="none";
+    document.getElementById("app").style.display="block";
+    showPrompts();
+    window.scrollTo(0,0);
+}
+
+function goHome(){
+    document.getElementById("app").style.display="none";
+    document.getElementById("home").style.display="flex";
+    window.scrollTo(0,0);
+}
+
+function setCategory(category,button){
+
+    currentCategory=category;
+
+    document.querySelectorAll(".categories button")
+    .forEach(b=>b.classList.remove("active"));
+
+    button.classList.add("active");
+
+    showPrompts();
+}
+
+function showPrompts(){
+
+    const search =
+    document.getElementById("search").value.toLowerCase();
+
+    const list =
+    document.getElementById("promptList");
+
+    list.innerHTML="";
+
+    let found=0;
+
+    prompts.forEach((item,index)=>{
+
+        const title=item[0];
+        const category=item[1];
+        const prompt=item[2];
+
+        const matchesSearch =
+        title.toLowerCase().includes(search) ||
+        prompt.toLowerCase().includes(search);
+
+        const matchesCategory =
+        currentCategory==="All" ||
+        category===currentCategory;
+
+        if(matchesSearch && matchesCategory){
+
+            found++;
+
+            const card=document.createElement("div");
+
+            card.className="card";
+
+            card.innerHTML=`
+                <h2>✨ ${index+1}. ${title}</h2>
+
+                <span class="badge">${category}</span>
+
+                <div class="prompt">${prompt}</div>
+
+                <button class="copy"
+                onclick="copyText(this)">
+                📋 Copy Prompt
+                </button>
+            `;
+
+            list.appendChild(card);
+        }
+
+    });
+
+    if(found===0){
+
+        list.innerHTML=`
+        <div class="no-result">
+            😕<br><br>
+            No prompt found.
+        </div>
+        `;
+
+    }
+
+}
+
+function copyText(button){
+
+    const text =
+    button.parentElement.querySelector(".prompt").innerText;
+
+    /* Modern clipboard */
+    if(navigator.clipboard){
+
+        navigator.clipboard.writeText(text)
+        .then(()=>{
+            copied(button);
+        })
+        .catch(()=>{
+            oldCopy(text,button);
+        });
+
+    }else{
+
+        oldCopy(text,button);
+
+    }
+}
+
+function oldCopy(text,button){
+
+    const area=document.createElement("textarea");
+
+    area.value=text;
+
+    area.style.position="fixed";
+    area.style.left="-9999px";
+
+    document.body.appendChild(area);
+
+    area.focus();
+    area.select();
+
+    try{
+        document.execCommand("copy");
+        copied(button);
+    }
+    catch(e){
+        alert("Prompt select karke manually copy karo.");
+    }
+
+    document.body.removeChild(area);
+}
+
+function copied(button){
+
+    button.innerText="✅ Copied!";
+
+    setTimeout(()=>{
+        button.innerText="📋 Copy Prompt";
+    },1500);
+}
+
+</script>
+
+</body>
+</html>
