@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Little Sumxt AI Prompts</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#070b16;
+    color:white;
+}
+
+/* FIRST PAGE */
+.home{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:25px;
+    background:
+    radial-gradient(circle at top,#2636a8 0%,transparent 35%),
+    radial-gradient(circle at bottom,#741c91 0%,transparent 35%),
+    #070b16;
+}
+
+.home-box{
+    max-width:700px;
+}
+
+.logo{
+    font-size:42px;
+    font-weight:900;
+    margin-bottom:15px;
+    background:linear-gradient(90deg,#00eaff,#a855f7,#ff4ecd);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.home h2{
+    font-size:24px;
+    margin-bottom:18px;
+}
+
+.home p{
+    color:#c8cbe0;
+    line-height:1.7;
+    font-size:16px;
+    margin-bottom:30px;
+}
+
+.start-btn{
+    border:0;
+    padding:16px 40px;
+    border-radius:50px;
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+    background:linear-gradient(90deg,#6c5ce7,#00c6ff);
+    box-shadow:0 0 30px #365cff88;
+    transition:.3s;
+}
+
+.start-btn:hover{
+    transform:scale(1.06);
+}
+
+/* APP PAGE */
+.app{
+    display:none;
+    min-height:100vh;
+}
+
+header{
+    position:sticky;
+    top:0;
+    z-index:10;
+    padding:18px;
+    background:#0b1020ee;
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid #252b45;
+}
+
+.header-title{
+    font-size:25px;
+    font-weight:900;
+    text-align:center;
+    background:linear-gradient(90deg,#00eaff,#c855ff);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.search-area{
+    max-width:900px;
+    margin:18px auto 0;
+    display:flex;
+    gap:8px;
+}
+
+.search-area input{
+    flex:1;
+    padding:14px;
+    border-radius:12px;
+    border:1px solid #303854;
+    outline:none;
+    background:#11172a;
+    color:white;
+    font-size:15px;
+}
+
+.search-area button{
+    padding:0 20px;
+    border:0;
+    border-radius:12px;
+    background:#6855ff;
+    color:white;
+    font-weight:bold;
+}
+
+/* CATEGORIES */
+.categories{
+    display:flex;
+    gap:9px;
+    overflow-x:auto;
+    padding:15px;
+    max-width:1100px;
+    margin:auto;
+}
+
+.cat{
+    flex-shrink:0;
+    padding:10px 17px;
+    border-radius:30px;
+    border:1px solid #333b59;
+    background:#11172a;
+    color:#ddd;
+    cursor:pointer;
+}
+
+.cat.active,
+.cat:hover{
+    background:#6855ff;
+    color:white;
+}
+
+/* GRID */
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:10px 15px 50px;
+}
+
+.count{
+    color:#aaa;
+    margin:10px 0 18px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+    gap:18px;
+}
+
+.card{
+    background:#101629;
+    border:1px solid #252d49;
+    border-radius:18px;
+    overflow:hidden;
+    transition:.25s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+    border-color:#6d5cff;
+    box-shadow:0 10px 35px #0008;
+}
+
+.card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+    display:block;
+}
+
+.card-body{
+    padding:16px;
+}
+
+.number{
+    color:#8d82ff;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.card h3{
+    margin:7px 0;
+    font-size:17px;
+}
+
+.prompt{
+    color:#c8ccdb;
+    line-height:1.55;
+    font-size:14px;
+}
+
+.copy{
+    width:100%;
+    margin-top:14px;
+    padding:11px;
+    border:0;
+    border-radius:10px;
+    background:#252d4c;
+    color:white;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.copy:hover{
+    background:#6855ff;
+}
+
+.empty{
+    text-align:center;
+    padding:50px;
+    color:#aaa;
+}
+
+@media(max-width:600px){
+    .logo{font-size:34px}
+    .home h2{font-size:20px}
+    .grid{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- FIRST PAGE -->
+<section class="home" id="home">
+    <div class="home-box">
+
+        <div class="logo">Little Sumxt</div>
+
+        <h2>AI Photo Prompts</h2>
+
+        <p>
+            Welcome to Little Sumxt AI Prompts — your creative collection
+            of AI photo editing prompts. Explore thousands of creative
+            ideas for portraits, cinematic photos, fashion, nature,
+            fantasy, cars, travel and many more styles.
+        </p>
+
+        <button class="start-btn" onclick="startApp()">
+            Get Started 🚀
+        </button>
+
+    </div>
+</section>
+
+
+<!-- SECOND PAGE -->
+<section class="app" id="app">
+
+<header>
+
+    <div class="header-title">
+        ✨ Little Sumxt AI Prompts
+    </div>
+
+    <div class="search-area">
+        <input
+            id="search"
+            type="text"
+            placeholder="Search AI photo prompts..."
+            oninput="filterPrompts()"
+        >
+
+        <button onclick="filterPrompts()">
+            Search 🔍
+        </button>
+    </div>
+
+</header>
+
+
+<div class="categories" id="categories"></div>
+
+
+<div class="container">
+
+    <div class="count" id="count"></div>
+
+    <div class="grid" id="promptGrid"></div>
+
+</div>
+
+</section>
+
+
+<script>
+
+/* ------------------------------
+   PROMPT DATA
+--------------------------------*/
+
+const categories = [
+    "All",
+    "Portrait",
+    "Cinematic",
+    "Fashion",
+    "Nature",
+    "Travel",
+    "Fantasy",
+    "Cars",
+    "Luxury",
+    "Street",
+    "Anime",
+    "Studio"
+];
+
+const styles = {
+
+Portrait:[
+"Create a realistic cinematic portrait with soft natural lighting, detailed skin texture, sharp eyes and professional photography.",
+"Transform the photo into a premium studio portrait with dramatic lighting, realistic details and a blurred background.",
+"Edit the portrait into a cinematic magazine-style photograph with natural skin tones and high detail."
+],
+
+Cinematic:[
+"Turn the photo into a cinematic movie scene with dramatic lighting, atmospheric background, realistic shadows and film color grading.",
+"Create a dramatic Hollywood-style portrait with cinematic lighting, depth of field and realistic details.",
+"Transform the image into a premium cinematic frame with moody atmosphere and professional color grading."
+],
+
+Fashion:[
+"Transform the photo into a luxury fashion editorial with stylish clothing, studio lighting and a premium magazine look.",
+"Create a high-end fashion photoshoot with elegant styling, realistic fabric details and professional lighting.",
+"Turn the image into a modern fashion campaign photograph with cinematic shadows and sharp details."
+],
+
+Nature:[
+"Place the subject in a beautiful natural landscape with golden sunlight, realistic trees, atmospheric depth and detailed surroundings.",
+"Transform the photo into a peaceful mountain environment with realistic clouds, sunlight and cinematic colors.",
+"Create a stunning nature portrait surrounded by lush greenery, soft sunlight and realistic environmental details."
+],
+
+Travel:[
+"Transform the image into a cinematic travel photograph in a beautiful destination with realistic architecture and natural lighting.",
+"Place the subject in a famous-looking travel location with dramatic skies, realistic lighting and professional photography.",
+"Create a premium vacation photograph with beautiful scenery, natural colors and cinematic depth."
+],
+
+Fantasy:[
+"Transform the photo into a magical fantasy world with glowing atmosphere, dramatic clouds and highly detailed surroundings.",
+"Create an epic fantasy portrait with magical lighting, mystical background and cinematic details.",
+"Turn the image into a fantasy movie poster style scene with dramatic environment and realistic subject details."
+],
+
+Cars:[
+"Create a cinematic luxury car photoshoot with dramatic lighting, reflections, detailed vehicle surfaces and an urban background.",
+"Transform the photo into a premium automotive advertisement with realistic reflections and professional studio lighting.",
+"Place the subject beside a futuristic luxury car in a cinematic city environment with realistic details."
+],
+
+Luxury:[
+"Transform the photo into a luxury lifestyle scene with premium architecture, elegant lighting and cinematic photography.",
+"Create a high-end luxury portrait with an expensive-looking environment, realistic lighting and professional details.",
+"Turn the image into a premium lifestyle campaign with elegant surroundings and dramatic cinematic lighting."
+],
+
+Street:[
+"Create a realistic urban street photograph with neon lights, cinematic shadows, detailed buildings and natural atmosphere.",
+"Transform the photo into a stylish city street scene with realistic lighting, reflections and cinematic color grading.",
+"Create a modern street photography scene with atmospheric lighting and highly detailed surroundings."
+],
+
+Anime:[
+"Transform the photo into a beautiful anime-inspired cinematic scene while preserving the main facial features and pose.",
+"Create a detailed anime movie-style portrait with expressive eyes, soft lighting and colorful background.",
+"Turn the image into a premium anime illustration with cinematic lighting and detailed environment."
+],
+
+Studio:[
+"Create a professional studio photoshoot with softbox lighting, clean background, sharp details and realistic skin tones.",
+"Transform the photo into a premium professional portrait studio setup with dramatic shadows and high detail.",
+"Create a clean commercial studio photograph with realistic lighting and professional composition."
+]
+};
+
+
+/* --------------------------------
+   CREATE 1000 PROMPTS
+---------------------------------*/
+
+let prompts = [];
+
+let id = 1;
+
+while(prompts.length < 1000){
+
+    for(let category of categories.slice(1)){
+
+        if(prompts.length >= 1000) break;
+
+        const list = styles[category];
+
+        const base = list[prompts.length % list.length];
+
+        const variations = [
+            "Ultra realistic 4K quality, professional photography.",
+            "8K detailed image, realistic textures, natural lighting.",
+            "Professional DSLR photography, shallow depth of field.",
+            "High detail, realistic colors, cinematic composition.",
+            "Premium editorial photography, sharp focus and realistic atmosphere."
+        ];
+
+        const variation =
+            variations[prompts.length % variations.length];
+
+        prompts.push({
+            id:id++,
+            category:category,
+            text:base+" "+variation,
+            image:
+            "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80"
+        });
+    }
+}
+
+
+/* --------------------------------
+   HOME -> APP
+---------------------------------*/
+
+function startApp(){
+
+    document.getElementById("home").style.display="none";
+    document.getElementById("app").style.display="block";
+
+    createCategories();
+    showPrompts(prompts);
+
+    window.scrollTo(0,0);
+}
+
+
+/* --------------------------------
+   CATEGORIES
+---------------------------------*/
+
+function createCategories(){
+
+    const box=document.getElementById("categories");
+
+    box.innerHTML="";
+
+    categories.forEach((category,index)=>{
+
+        const button=document.createElement("button");
+
+        button.className="cat";
+
+        if(index===0){
+            button.classList.add("active");
+        }
+
+        button.innerText=category;
+
+        button.onclick=()=>{
+
+            document
+            .querySelectorAll(".cat")
+            .forEach(x=>x.classList.remove("active"));
+
+            button.classList.add("active");
+
+            if(category==="All"){
+                showPrompts(prompts);
+            }else{
+                showPrompts(
+                    prompts.filter(
+                        p=>p.category===category
+                    )
+                );
+            }
+        };
+
+        box.appendChild(button);
+
+    });
+}
+
+
+/* --------------------------------
+   DISPLAY PROMPTS
+---------------------------------*/
+
+function showPrompts(data){
+
+    const grid=document.getElementById("promptGrid");
+
+    const count=document.getElementById("count");
+
+    grid.innerHTML="";
+
+    count.innerText =
+        "Showing "+data.length+" AI prompts";
+
+    if(data.length===0){
+
+        grid.innerHTML=
+        '<div class="empty">No prompts found 🔍</div>';
+
+        return;
+    }
+
+    data.forEach(p=>{
+
+        const card=document.createElement("div");
+
+        card.className="card";
+
+        card.innerHTML=`
+
+            <img
+                src="${p.image}"
+                loading="lazy"
+                alt="AI reference image"
+            >
+
+            <div class="card-body">
+
+                <div class="number">
+                    #${p.id} • ${p.category}
+                </div>
+
+                <h3>
+                    AI Photo Edit Prompt
+                </h3>
+
+                <div class="prompt">
+                    ${p.text}
+                </div>
+
+                <button
+                    class="copy"
+                    onclick="copyPrompt(${p.id})"
+                >
+                    📋 Copy Prompt
+                </button>
+
+            </div>
+        `;
+
+        grid.appendChild(card);
+
+    });
+}
+
+
+/* --------------------------------
+   SEARCH
+---------------------------------*/
+
+function filterPrompts(){
+
+    const value=
+        document
+        .getElementById("search")
+        .value
+        .toLowerCase()
+        .trim();
+
+    if(!value){
+
+        showPrompts(prompts);
+
+        return;
+    }
+
+    const result=prompts.filter(p=>
+
+        p.text.toLowerCase().includes(value) ||
+
+        p.category.toLowerCase().includes(value)
+
+    );
+
+    showPrompts(result);
+}
+
+
+/* --------------------------------
+   COPY
+---------------------------------*/
+
+function copyPrompt(id){
+
+    const item=
+        prompts.find(p=>p.id===id);
+
+    navigator.clipboard.writeText(item.text);
+
+    alert("Prompt copied! ✅");
+
+}
+
+</script>
+
+</body>
+  </html>
